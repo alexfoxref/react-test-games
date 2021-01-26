@@ -15,8 +15,9 @@ export const SearchPanel = () => {
   const {
     loading: { platforms: platformsLoading },
   } = useSelector(state => state.request)
-  const isTiny = screenType === config.tinyScreenType
-  const isMobile = isTiny || screenType === config.mobileScreenType
+  const isMobile =
+    screenType === config.tinyScreenType ||
+    screenType === config.mobileScreenType
   const { search, sort, sort_direction, filter } = useSelector(
     state => state.search
   )

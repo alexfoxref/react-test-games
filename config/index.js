@@ -116,7 +116,7 @@ export const config = {
     API_KEY: 'e34974736ed04957b7d3887739170a16',
     API_BASE: 'https://api.rawg.io/api',
     startPage: 1,
-    page_size: 20,
+    page_size: 24,
     games: {
       path: '/games',
     },
