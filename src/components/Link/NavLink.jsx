@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { NavLink as RouterNavLink } from 'react-router-dom'
+import { NavLink as ReactNavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { styles } from './styles'
 
-const StyledNavLink = styled(RouterNavLink)`
+const StyledNavLink = styled(ReactNavLink)`
   ${props => styles(props)}
 `
 

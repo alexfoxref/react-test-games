@@ -11,6 +11,7 @@ const StyledSelectList = styled.ul`
   max-height: 200px;
   overflow-x: hidden;
   overflow-y: scroll;
+  border: 1px solid #cccccc;
   border-radius: ${({ height }) => height / 2 || '23px'};
   background-color: ${({ theme }) => theme.backgroundColor.active || '#ffffff'};
   padding: 5% 10%;

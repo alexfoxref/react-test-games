@@ -6,6 +6,10 @@ const Link = styled.a`
   color: ${({ color, theme }) => color || theme.textColor.active || '#000000'};
   text-decoration: none;
   cursor: pointer;
+  display: block;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   &:hover {
     color: ${({ theme }) => theme.textColor.hover || 'rgba(0, 0, 0, .6)'};

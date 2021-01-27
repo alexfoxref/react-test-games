@@ -28,6 +28,14 @@ export const Navbar = () => {
     setNavbarHeight(nav.current.getBoundingClientRect().height)
 
   useEffect(() => {
+    if (toggle) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+  }, [toggle])
+
+  useEffect(() => {
     onResizeHandler()
 
     window.addEventListener('resize', onResizeHandler)

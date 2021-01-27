@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { config } from '../../../config'
 import { NavLink } from '../Link/NavLink'
-import { Li, Ul } from './styles'
+import { Li } from './styles'
 import styled from 'styled-components'
+import { push } from 'react-router-redux'
 
-const UlMobile = styled(Ul)`
+const UlMobile = styled.ul`
+  list-style: none;
+  display: ${({ toggle }) => (toggle ? 'flex' : 'none')};
   margin: 0;
   padding: 0;
   flex-direction: column;
@@ -42,6 +45,26 @@ const LiMobile = styled(Li)`
 const NavLinksMobile = ({ toggle = false, toggleSwitcher, navbarHeight }) => {
   const [touchPositionX, setTouchPositionX] = useState(0)
   const [menuPosition, setMenuPosition] = useState(0)
+  const list = useRef(null)
+
+  const touchOutsideHandler = useCallback(
+    event => {
+      if (list.current && toggle && !list.current.contains(event.target)) {
+        event.preventDefault()
+        toggleSwitcher()
+      }
+    },
+    [list.current, toggle]
+  )
+
+  useEffect(() => {
+    document.addEventListener('touchend', touchOutsideHandler)
+
+    return () => {
+      document.removeEventListener('touchend', touchOutsideHandler)
+    }
+  }, [touchOutsideHandler])
+
   const setPositionHandler = event => {
     setTouchPositionX(event.changedTouches[0].clientX)
   }
@@ -52,8 +75,7 @@ const NavLinksMobile = ({ toggle = false, toggleSwitcher, navbarHeight }) => {
   }
   const closeMenuHandler = event => {
     if (event.changedTouches[0].clientX > touchPositionX) {
-      event.preventDefault()
-      toggleSwitcher(event)
+      toggleSwitcher()
       setTimeout(() => setMenuPosition(0), config.theme.animationTime)
     }
   }
@@ -66,9 +88,18 @@ const NavLinksMobile = ({ toggle = false, toggleSwitcher, navbarHeight }) => {
       onTouchMove={changePositionHandler}
       onTouchEnd={closeMenuHandler}
       style={{ right: `${menuPosition}px` }}
+      toggle={toggle}
+      ref={list}
     >
       {config.navLinks.map(({ to, key, title }) => (
-        <LiMobile key={key} toggle={toggle} onTouchEnd={toggleSwitcher}>
+        <LiMobile
+          key={key}
+          toggle={toggle}
+          onClick={() => {
+            toggleSwitcher()
+            push(to)
+          }}
+        >
           <NavLink to={to} title={title} />
         </LiMobile>
       ))}
